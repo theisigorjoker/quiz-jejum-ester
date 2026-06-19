@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Espiritual — Jejum de Ester</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#1a0533 0%,#2d0a4e 40%,#1a0533 100%);min-height:100vh;padding:1.5rem 1rem 3rem}
+
+/* PARTICLES */
+.particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(255,200,255,.4);animation:float linear infinite}
+@keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100px) rotate(720deg);opacity:0}}
+
+#app{max-width:580px;margin:0 auto;position:relative;z-index:1}
+
+/* TYPOGRAPHY */
+.playfair{font-family:'Playfair Display',serif}
+.eyebrow{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#E8B4FF;font-weight:600;margin-bottom:.6rem}
+.h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;line-height:1.3;color:#FFF8FF}
+.h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;line-height:1.35;color:#FFF8FF}
+.h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;line-height:1.4;color:#FFF8FF}
+.body{font-size:14px;color:#D4B8E8;line-height:1.75}
+.body-light{font-size:14px;color:#F0E6FF;line-height:1.75}
+
+/* GLASS CARD */
+.glass{background:rgba(255,255,255,.06);backdrop-filter:blur(20px);border:1px solid rgba(255,200,255,.15);border-radius:20px}
+.glass-dark{background:rgba(0,0,0,.25);backdrop-filter:blur(20px);border:1px solid rgba(255,200,255,.1);border-radius:16px}
+
+/* PROGRESS */
+.prog-wrap{margin-bottom:1.75rem}
+.prog-top{display:flex;justify-content:space-between;margin-bottom:8px}
+.prog-label{font-size:11px;color:#C4A0E0;letter-spacing:.05em}
+.prog-pct{font-size:11px;color:#E8B4FF;font-weight:700}
+.prog-bg{height:4px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,#C084FC,#F0ABFC,#C084FC);background-size:200%;border-radius:4px;transition:width .5s ease;animation:shimmer 2s linear infinite}
+@keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+
+/* OPTIONS */
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:1.25rem}
+.opt{width:100%;text-align:left;padding:14px 16px;border:1px solid rgba(255,200,255,.2);border-radius:14px;background:rgba(255,255,255,.04);cursor:pointer;font-size:14px;color:#E8D8FF;line-height:1.5;transition:all .2s;display:flex;align-items:center;gap:12px;font-family:'Inter',sans-serif}
+.opt:hover{border-color:rgba(192,132,252,.6);background:rgba(192,132,252,.1);transform:translateX(4px)}
+.opt.sel{border:1.5px solid #C084FC;background:rgba(192,132,252,.2);color:#FFF8FF;transform:translateX(4px)}
+.opt-num{width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(255,200,255,.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;color:rgba(255,200,255,.5);transition:all .2s}
+.opt.sel .opt-num{background:#C084FC;color:#fff;border-color:#C084FC;box-shadow:0 0 12px rgba(192,132,252,.5)}
+
+/* BUTTONS */
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.5rem;gap:10px}
+.btn-back{background:transparent;border:1px solid rgba(255,200,255,.2);border-radius:12px;padding:11px 18px;font-size:13px;color:#C4A0E0;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif}
+.btn-back:hover{background:rgba(255,255,255,.05);border-color:rgba(192,132,252,.4)}
+.btn-next{background:linear-gradient(135deg,#9333EA,#C084FC,#E879F9);color:#fff;border:none;border-radius:12px;padding:13px 28px;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s;margin-left:auto;box-shadow:0 4px 20px rgba(147,51,234,.4);font-family:'Inter',sans-serif;letter-spacing:.02em}
+.btn-next:disabled{opacity:.3;cursor:default;box-shadow:none}
+.btn-next:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(147,51,234,.5)}
+.btn-full{width:100%;background:linear-gradient(135deg,#9333EA,#C084FC,#E879F9);color:#fff;border:none;border-radius:14px;padding:16px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 6px 24px rgba(147,51,234,.4);transition:all .2s;font-family:'Playfair Display',serif;letter-spacing:.03em;position:relative;overflow:hidden}
+.btn-full::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent,rgba(255,255,255,.1),transparent);transform:rotate(45deg);animation:shine 3s infinite}
+@keyframes shine{0%{transform:translateX(-100%) rotate(45deg)}100%{transform:translateX(100%) rotate(45deg)}}
+.btn-full:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(147,51,234,.5)}
+
+/* INTRO */
+.intro-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(192,132,252,.15);border:1px solid rgba(192,132,252,.3);color:#E8B4FF;font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px;margin-bottom:1.25rem;letter-spacing:.08em}
+.social-proof{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin:1.25rem 0}
+.sp-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#C4A0E0}
+.sp-item i{color:#E8B4FF;font-size:14px}
+.intro-test{background:rgba(255,255,255,.05);border:1px solid rgba(255,200,255,.15);border-radius:14px;padding:14px 16px;margin:1.25rem 0;text-align:left}
+.it-stars{color:#F59E0B;font-size:13px;margin-bottom:.4rem}
+.it-text{font-size:13px;font-style:italic;color:#F0E6FF;line-height:1.6;font-family:'Playfair Display',serif}
+.it-author{font-size:11px;color:#A87BC8;margin-top:6px}
+.start-sub{font-size:12px;color:#A87BC8;text-align:center;margin-top:.5rem}
+
+/* TRANSITION */
+.trans-wrap{text-align:center;padding:.5rem 0}
+.trans-icon{width:64px;height:64px;border-radius:50%;background:rgba(192,132,252,.15);border:1px solid rgba(192,132,252,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:28px;color:#E8B4FF;box-shadow:0 0 30px rgba(192,132,252,.2)}
+.trans-verse{background:rgba(192,132,252,.08);border-left:3px solid #C084FC;border-radius:0 14px 14px 0;padding:14px 18px;margin:1.25rem 0;text-align:left}
+.verse-text{font-size:13px;font-style:italic;color:#E8D8FF;line-height:1.65;font-family:'Playfair Display',serif}
+.verse-ref{font-size:11px;color:#C084FC;margin-top:5px;font-weight:700}
+
+/* LOADING */
+.loading-wrap{text-align:center;padding:2rem 0}
+.loading-icon{width:72px;height:72px;border-radius:50%;background:rgba(192,132,252,.1);border:2px solid rgba(192,132,252,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:32px;color:#E8B4FF;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(192,132,252,.4)}50%{box-shadow:0 0 0 20px rgba(192,132,252,0)}}
+.loading-bar-bg{height:6px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden;margin:1.5rem 0}
+.loading-bar-fill{height:100%;background:linear-gradient(90deg,#9333EA,#C084FC,#E879F9);background-size:200%;border-radius:6px;width:0;transition:width .3s ease;animation:shimmer 2s linear infinite}
+.loading-items{display:flex;flex-direction:column;gap:12px;text-align:left;margin-top:1.5rem}
+.li-item{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,.25);transition:all .4s}
+.li-item.active{color:#E8D8FF}
+.li-item i{font-size:15px;color:#C084FC;width:20px}
+
+/* RESULT */
+.result-hero{background:linear-gradient(135deg,rgba(147,51,234,.2),rgba(192,132,252,.1));border:1px solid rgba(192,132,252,.25);border-radius:20px;padding:1.5rem;text-align:center;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.result-hero::before{content:'✨';position:absolute;top:10px;right:15px;font-size:24px;opacity:.5}
+.profile-badge{display:inline-block;background:linear-gradient(135deg,#9333EA,#C084FC);color:#fff;font-size:11px;font-weight:700;padding:5px 16px;border-radius:20px;margin-bottom:.75rem;letter-spacing:.08em;box-shadow:0 4px 12px rgba(147,51,234,.3)}
+
+/* DOR/SOL BLOCKS */
+.dor-block{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:14px;padding:1.25rem;margin-bottom:1rem}
+.dor-title{font-size:11px;font-weight:700;color:#FCA5A5;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;display:flex;align-items:center;gap:6px}
+.sol-block{background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.15);border-radius:14px;padding:1.25rem;margin-bottom:1rem}
+.sol-title{font-size:11px;font-weight:700;color:#86EFAC;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;display:flex;align-items:center;gap:6px}
+.list-item{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:#E8D8FF;line-height:1.55;margin-bottom:8px}
+.list-item i{font-size:14px;margin-top:1px;flex-shrink:0}
+
+/* WHATS INCLUDED */
+.includes-block{background:rgba(192,132,252,.06);border:1px solid rgba(192,132,252,.2);border-radius:16px;padding:1.25rem;margin-bottom:1rem}
+.includes-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#F0E6FF;margin-bottom:1rem;text-align:center}
+.include-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,200,255,.08)}
+.include-item:last-child{border-bottom:none;padding-bottom:0}
+.include-icon{width:36px;height:36px;border-radius:10px;background:rgba(192,132,252,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.include-name{font-size:14px;font-weight:600;color:#F0E6FF;margin-bottom:2px}
+.include-desc{font-size:12px;color:#A87BC8;line-height:1.5}
+.include-bonus{display:inline-block;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#FCA5A5;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:3px;letter-spacing:.05em}
+
+/* TESTIMONIALS */
+.test-block{background:rgba(255,255,255,.04);border:1px solid rgba(255,200,255,.1);border-radius:14px;padding:14px 16px;margin-bottom:.75rem}
+.test-header{display:flex;align-items:center;gap:10px;margin-bottom:.6rem}
+.test-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#9333EA,#C084FC);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;box-shadow:0 4px 12px rgba(147,51,234,.3)}
+.test-name{font-size:13px;font-weight:600;color:#F0E6FF}
+.test-city{font-size:11px;color:#A87BC8}
+.stars{color:#F59E0B;font-size:13px;margin-bottom:.4rem}
+.test-text{font-size:13px;font-style:italic;color:#D4B8E8;line-height:1.65;font-family:'Playfair Display',serif}
+
+/* TIMER */
+.timer-bar{background:linear-gradient(135deg,rgba(239,68,68,.15),rgba(239,68,68,.08));border:1px solid rgba(239,68,68,.25);border-radius:14px;padding:12px 16px;margin-bottom:1rem;text-align:center}
+.timer-label{font-size:11px;color:#FCA5A5;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem}
+.timer-digits{display:flex;justify-content:center;gap:8px;align-items:center}
+.timer-block{background:rgba(239,68,68,.2);border:1px solid rgba(239,68,68,.3);border-radius:8px;padding:6px 10px;min-width:48px;text-align:center}
+.timer-num{font-size:22px;font-weight:700;color:#FFF;font-family:'Playfair Display',serif;line-height:1}
+.timer-unit{font-size:9px;color:#FCA5A5;letter-spacing:.05em;text-transform:uppercase}
+.timer-sep{color:#FCA5A5;font-size:18px;font-weight:700;margin-top:-6px}
+.timer-text{font-size:12px;color:#FCA5A5;margin-top:.4rem}
+
+/* SCARCITY */
+.scarcity-bar{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:12px;padding:10px 16px;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.scarcity-icon{font-size:18px}
+.scarcity-text{font-size:13px;color:#FDE68A;font-weight:500}
+.scarcity-count{font-weight:700;color:#F59E0B}
+
+/* OFFER BOX */
+.offer-box{background:linear-gradient(135deg,rgba(147,51,234,.15),rgba(192,132,252,.08));border:2px solid rgba(192,132,252,.35);border-radius:20px;padding:1.5rem;text-align:center;margin-bottom:1rem;box-shadow:0 8px 40px rgba(147,51,234,.2),inset 0 1px 0 rgba(255,255,255,.05)}
+.offer-tag{display:inline-block;background:linear-gradient(135deg,#EF4444,#F97316);color:#fff;font-size:11px;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:.75rem;letter-spacing:.08em;box-shadow:0 4px 12px rgba(239,68,68,.3)}
+.offer-h{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#F0E6FF;margin-bottom:.5rem;line-height:1.35}
+.price-old{font-size:13px;color:#A87BC8;text-decoration:line-through;margin-bottom:2px}
+.price-new{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:#FFF;line-height:1;text-shadow:0 0 20px rgba(192,132,252,.5)}
+.price-inst{font-size:13px;color:#C084FC;margin-bottom:1rem;margin-top:4px}
+.guarantee-text{font-size:12px;color:#A87BC8;display:flex;align-items:center;justify-content:center;gap:5px;margin-top:.5rem}
+.security-row{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap;margin-top:.75rem}
+.sec-item{display:flex;align-items:center;gap:4px;font-size:11px;color:#A87BC8}
+.sec-item i{font-size:13px;color:#C084FC}
+
+/* SEPARATOR */
+.sep{height:1px;background:rgba(255,200,255,.08);margin:1.25rem 0}
+
+/* MORE TESTS */
+.more-title{font-size:11px;font-weight:700;color:#A87BC8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;text-align:center}
+.mini-test{background:rgba(255,255,255,.03);border:1px solid rgba(255,200,255,.08);border-radius:12px;padding:12px 14px;margin-bottom:.75rem}
+.mini-test-text{font-size:13px;font-style:italic;color:#D4B8E8;line-height:1.55;font-family:'Playfair Display',serif}
+.mini-test-author{font-size:11px;color:#A87BC8;margin-top:5px}
+
+/* FAQ */
+.faq-block{margin-bottom:1rem}
+.faq-title{font-size:11px;font-weight:700;color:#A87BC8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;text-align:center}
+.faq-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,200,255,.08);border-radius:12px;margin-bottom:.5rem;overflow:hidden}
+.faq-q{padding:12px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;color:#E8D8FF;transition:background .2s}
+.faq-q:hover{background:rgba(255,255,255,.03)}
+.faq-q i{color:#C084FC;font-size:12px;transition:transform .3s;flex-shrink:0;margin-left:8px}
+.faq-q.open i{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:all .3s;font-size:13px;color:#C4A0E0;line-height:1.7}
+.faq-a.open{padding:0 16px 12px;max-height:200px}
+
+/* FINAL CTA */
+.final-cta{text-align:center;padding:1rem 0}
+.final-cta-quote{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:#D4B8E8;margin-bottom:1.25rem;line-height:1.6;border-left:2px solid #C084FC;padding-left:12px;text-align:left}
+
+/* FLOATING HEARTS */
+.floating{position:absolute;pointer-events:none;font-size:16px;animation:floatUp 3s ease-out forwards;opacity:0}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(0.5)}}
+
+/* LIVE BADGE */
+.live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#FCA5A5;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;margin-bottom:.75rem}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#EF4444;animation:blink 1s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* VIEWERS COUNT */
+.viewers{font-size:12px;color:#C4A0E0;text-align:center;margin-bottom:.75rem}
+.viewers span{color:#E8B4FF;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<div id="app">
+  <div class="glass" style="padding:1.5rem 1.25rem;margin-bottom:.5rem">
+    <div id="screen"></div>
+  </div>
+</div>
+
+<script>
+const CHECKOUT = "https://pay.cakto.com.br/39ua6rn";
+
+// Particles
+(function(){
+  const p = document.getElementById('particles');
+  for(let i=0;i<20;i++){
+    const el = document.createElement('div');
+    el.className = 'particle';
+    el.style.cssText = `left:${Math.random()*100}%;animation-duration:${8+Math.random()*12}s;animation-delay:${Math.random()*10}s;opacity:${.2+Math.random()*.4}`;
+    p.appendChild(el);
+  }
+})();
+
+// Timer
+let timerInterval = null;
+function startTimer(endTime) {
+  if(timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    const now = Date.now();
+    const diff = Math.max(0, endTime - now);
+    const h = Math.floor(diff/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    const el = document.getElementById('timer-display');
+    if(el) {
+      el.innerHTML = `
+        <div class="timer-block"><div class="timer-num">${String(h).padStart(2,'0')}</div><div class="timer-unit">horas</div></div>
+        <div class="timer-sep">:</div>
+        <div class="timer-block"><div class="timer-num">${String(m).padStart(2,'0')}</div><div class="timer-unit">min</div></div>
+        <div class="timer-sep">:</div>
+        <div class="timer-block"><div class="timer-num">${String(s).padStart(2,'0')}</div><div class="timer-unit">seg</div></div>`;
+    }
+    if(diff===0) clearInterval(timerInterval);
+  }, 1000);
+}
+
+// Viewers simulation
+let viewers = 847 + Math.floor(Math.random()*200);
+setInterval(() => {
+  viewers += Math.floor(Math.random()*5) - 2;
+  viewers = Math.max(600, Math.min(1200, viewers));
+  const el = document.getElementById('viewer-count');
+  if(el) el.textContent = viewers.toLocaleString('pt-BR');
+}, 3000);
+
+const questions = [
+  {phase:"Sua realidade",q:"Quando você acorda de manhã, qual é o primeiro sentimento que toma conta de você?",sub:"Seja completamente honesta. Isso vai revelar onde está o seu bloqueio espiritual.",opts:["Um peso no coração que não tem nome — uma angústia constante","Ansiedade — minha mente já começa a correr antes de eu levantar da cama","Vazio e sem direção — acordo sem energia, sem propósito e sem ânimo","Esperança misturada com medo de que nada vai realmente mudar"],vals:["peso","ansiosa","vazio","esperanca"]},
+  {phase:"Sua realidade",q:"Qual dessas frases faz o seu coração apertar quando você lê?",sub:"Não pense muito. A primeira reação é a mais verdadeira.",opts:["'Eu oro, jejuo, leio a Bíblia... e nada muda. Estou exausta de tentar.'","'Meu casamento está frio. Me sinto sozinha dentro da minha própria casa.'","'Sinto que Deus está em silêncio. Como se Ele não estivesse me ouvindo.'","'Tenho um chamado, mas não sei qual é. E o tempo está passando.'"],vals:["exausta","casamento","silencio","chamado"]},
+  {phase:"Sua realidade",q:"Há quanto tempo você carrega esse peso?",opts:["Faz meses — já me acostumei a viver assim, mas estou cada vez mais cansada","Faz anos — já não sei mais como era diferente, é como se sempre foi assim","Começou recentemente, mas tomou conta de tudo muito rápido","É um ciclo — melhora um pouco e volta tudo. Não consigo sair disso."],vals:["meses","anos","recente","ciclo"]},
+  {phase:"O que você já tentou",q:"Você já tentou fazer um jejum antes?",sub:"Sua resposta vai determinar o caminho que vou recomendar para você.",opts:["Nunca tentei — tenho medo de não conseguir e me sentir pior depois","Tentei e desisti no meio — fiquei me culpando por semanas","Já fiz, mas sem estrutura — ficava perdida, sem saber o que fazer com o tempo","Já fiz e tive resultado — mas quero ir muito mais fundo agora"],vals:["nunca","desistiu","sem_estrutura","experiente"]},
+  {phase:"O que você já tentou",q:"O que você já fez tentando mudar sua situação espiritual?",opts:["Fui a conferências, retiros e eventos — melhora uns dias e depois volta tudo","Assisti pregações e vídeos no YouTube buscando uma palavra que me alcançasse","Tentei sozinha — orei mais, li mais — mas sem estrutura e sem resultado real","Ainda não tentei muito — estou começando a buscar agora"],vals:["eventos","videos","sozinha","comecando"]},
+  {phase:"O que você precisa",q:"Se Deus pudesse agir em UMA área da sua vida agora, qual você escolheria?",sub:"Essa pergunta revela onde Ele quer te encontrar hoje.",opts:["Meu casamento — preciso de restauração urgente","Minha saúde emocional — ansiedade, medo, peso que não vai embora","Meu propósito — quero saber para que fui criada e começar a caminhar","Minha família — filhos, pais, situações que me pesam no coração"],vals:["casamento","emocional","proposito","familia"]},
+  {phase:"Seu posicionamento",q:"Ester estava com medo quando foi chamada. Mas ela foi assim mesmo.",sub:"Se você soubesse que esse pode ser o ponto de virada da sua vida — você estaria disposta a dar 3 dias?",opts:["Sim. Estou cansada do jeito que está. Preciso de uma mudança real agora.","Quero muito, mas ainda tenho medo de não conseguir terminar.","Preciso entender melhor o que está incluído antes de decidir.","Já decidi. Só estou confirmando que esse é o lugar certo para mim."],vals:["sim_total","sim_medo","curiosa","decidida"]}
+];
+
+const transitions = {
+  t1:{icon:"fa-fire",title:"O que você acabou de revelar é mais profundo do que parece.",lines:["Não é falta de fé. Não é falta de oração. É falta de posicionamento estratégico — e ninguém te ensinou isso.","Ester também estava com medo. Ela também não se sentia pronta. Mas ela decidiu agir — e o céu respondeu com poder.","Continue. As próximas perguntas vão revelar exatamente onde está o bloqueio e como o Jejum de Ester foi criado para esse momento específico."],verse:"'Para quê será que vim ao reino senão para um momento como este?'",ref:"Ester 4:14"},
+  t2:{icon:"fa-heart",title:"Você tentou. Você não desistiu de Deus. Isso diz muito sobre quem você é.",lines:["O fato de você ainda estar aqui, ainda buscando, ainda acreditando — mostra que algo dentro de você ainda espera. E essa esperança é de Deus.","O Jejum de Ester não é mais uma tentativa vazia. É um posicionamento com estrutura, direção bíblica e uma comunidade de +5.247 mulheres ao seu lado."],verse:"'Eis que faço uma coisa nova; está prestes a brotar. Não a percebeis?'",ref:"Isaías 43:19"}
+};
+
+const profiles = {
+  casamento:{badge:"Mulher que Intercede",title:"Seu maior bloqueio não é falta de fé — é falta de direção para transformar fé em posicionamento pelo seu lar.",dores:["Ora pelo casamento todos os dias mas não vê mudança acontecer","Carrega o peso da restauração sozinha, sem ninguém ao lado","Tem medo de que seja tarde demais para mudar o que está acontecendo","Se sente invisível e sozinha dentro da própria casa"],solucoes:["Orações estratégicas e bíblicas específicas para restauração conjugal","Como interceder com autoridade espiritual pelo seu marido","Guerra espiritual para quebrar o que está afastando sua família","Uma comunidade inteira de mulheres lutando pelo mesmo que você"],test:{n:"Bruna K.",c:"Rio de Janeiro, RJ",i:"B",t:"Tallyyyyy! Meu marido voltou pra casa. VOLTOU. Depois de 8 meses separados. No terceiro dia do jejum Deus me deu uma palavra e eu soube que Ele estava agindo. Deus é fiel demais."},test2:{n:"Camila S.",c:"São Paulo, SP",i:"C",t:"Tally, meu casamento foi restaurado completamente. O que mais me tocou foi seu cuidado no grupo — você nos trata de um jeito que nunca vi. Senti a resposta de Deus em cada palavra sua."},cta:"Quero me posicionar pelo meu casamento agora"},
+  emocional:{badge:"Mulher que Precisa de Cura",title:"A ansiedade e o cansaço que você sente não são fraqueza — são sinais de que algo espiritual precisa ser resolvido.",dores:["Acorda com peso no coração sem conseguir explicar por quê","A ansiedade roubou sua paz, sua alegria e até o seu sono","Se sente sozinha mesmo quando está rodeada de pessoas ao redor","Não consegue mais ouvir a voz de Deus com a clareza que já teve"],solucoes:["Orações específicas para libertação de ansiedade e medo","Cura interior e restauração de feridas antigas que você carrega","Como recuperar a paz sobrenatural que Deus promete em Filipenses 4","Suporte VIP durante os momentos mais difíceis do jejum"],test:{n:"Amanda K.",c:"Joinville, SC",i:"A",t:"O dinheiro mais bem investido da minha vida. Esse jejum não teve apenas transformação — me trouxe libertação de feridas antigas que eu carregava há anos sem saber."},test2:{n:"Patrícia V.",c:"Curitiba, PR",i:"P",t:"O acolhimento dessa comunidade me tirou da solidão espiritual. A Tally é um instrumento de Deus para nos despertar. Sinto que amadureci anos em poucos dias de jejum."},cta:"Quero me libertar desse peso agora"},
+  proposito:{badge:"Mulher Levantada Para Tal Tempo",title:"O incômodo que você sente não é insatisfação — é o chamado de Deus batendo na porta do seu coração.",dores:["Sente que nasceu para mais mas não sabe por onde começar","O tempo vai passando e o chamado ainda não se cumpriu","Tem dons e talentos, mas não sabe como ativá-los ou desenvolvê-los","Tem medo de errar o caminho e perder o propósito que Deus tem para você"],solucoes:["Ativações proféticas para despertar dons e promessas adormecidas","Como discernir a voz de Deus com clareza, segurança e confirmação","Posicionamento espiritual estratégico para cada fase do seu chamado","Acesso vitalício para revisitar em cada nova temporada da vida"],test:{n:"Sara T.",c:"Recife, PE",i:"S",t:"Eu sempre via seus vídeos falando sua história com o Senhor. Hoje conclui o Jejum de Ester com você. Que benção fazer parte dessa comunidade — sinto que finalmente encontrei meu lugar."},test2:{n:"Viviane F.",c:"Cuiabá, MT",i:"V",t:"Que unção de Deus na sua vida Tally! Derramei lágrimas que eu não sabia que existiam. Sinto que Deus está me chamando para algo novo e agora tenho coragem de responder ao chamado."},cta:"Quero descobrir e caminhar no meu chamado"},
+  geral:{badge:"Mulher que Aguarda",title:"Você não chegou até aqui por acaso — o incômodo que você sente é o céu tentando te mover para um lugar completamente novo.",dores:["Sente que ora mas as respostas do céu simplesmente não chegam","Carrega um peso espiritual que não consegue definir ou explicar","Se sente travada — como se algo invisível estivesse te segurando","Não sabe mais se está no caminho certo ou se perdeu a direção"],solucoes:["Direcionamento dia a dia — você não vai ficar perdida em nenhum momento","Estratégia bíblica completa para quebrar o travamento espiritual","Comunidade exclusiva de mulheres que vão te sustentar em oração","Acesso vitalício — faça o jejum quantas vezes precisar, quando quiser"],test:{n:"Cláudia S.",c:"Belo Horizonte, MG",i:"C",t:"Mulher, se você tá na dúvida, entra. Eu entrei sem acreditar muito e no terceiro dia Deus me visitou de uma forma sobrenatural. Não tenho palavras para descrever o que vivi."},test2:{n:"Débora M.",c:"Rio de Janeiro, RJ",i:"D",t:"Entrei com muito receio de não conseguir concluir os 3 dias. Mas o apoio da Tally e das outras mulheres me sustentou. Consegui e me sinto completamente renovada e transformada."},cta:"Quero me posicionar e ver Deus agir"}
+};
+
+const moreTests=[
+  {i:"L",n:"Larissa M.",c:"Fortaleza, CE",t:"Fui batizada no Espírito Santo durante o jejum. Nunca tinha vivido algo assim. Chorei, orei em línguas… foi o dia mais poderoso de toda a minha vida."},
+  {i:"L",n:"Letícia R.",c:"Curitiba, PR",t:"Eu estava à beira de desistir do meu casamento. No jejum Deus falou comigo de uma forma que nunca vou esquecer enquanto eu viver."},
+  {i:"G",n:"Glória P.",c:"Manaus, AM",t:"Uma amiga me enviou seu vídeo sobre o jejum e resolvi fazer com vocês — e recebi uma resposta que eu já tinha completamente desistido de esperar."},
+  {i:"M",n:"Marta S.",c:"Vila Velha, ES",t:"Eu to chorando até agora, sem acreditar no quão poderoso esse jejum é quando fazemos com fé de verdade."}
+];
+
+const faqs=[
+  {q:"Nunca consigo terminar um jejum — vou desistir de novo?",a:"O Jejum de Ester foi criado exatamente para quem nunca conseguiu completar. Você terá direcionamento diário, orações específicas para cada momento e uma comunidade inteira ao seu lado. Não é força de vontade — é posicionamento com suporte."},
+  {q:"Funciona para qualquer denominação?",a:"Sim. O Jejum de Ester é baseado exclusivamente na Palavra de Deus e nos princípios bíblicos do livro de Ester. Não há doutrina específica — é para toda mulher que deseja se posicionar diante do Trono."},
+  {q:"Quanto tempo preciso dedicar por dia?",a:"O mínimo é 20 minutos por dia. O conteúdo foi estruturado para mulheres com rotina intensa — mãe, esposa, profissional. Você decide o ritmo, Deus faz o resto."},
+  {q:"E se eu não conseguir fazer o jejum alimentar?",a:"Existem diferentes tipos de jejum no guia — total, parcial, apenas água, de redes sociais. O Planner de Jejum que você recebe de bônus ajuda a montar o tipo certo para a sua realidade e saúde."},
+  {q:"Como funciona a garantia?",a:"Você tem 7 dias para testar tudo. Se por qualquer motivo sentir que não é para você, basta enviar um email e devolvemos 100% do seu investimento. Sem perguntas, sem burocracia."}
+];
+
+let step="intro",cur=0,answers=[],loadTimer=null;
+const timerEnd = Date.now() + (11*3600000 + 47*60000 + 33000);
+
+function getProfile(){
+  const a1=answers[1]||"",a5=answers[5]||"";
+  if(a1==="casamento"||a5==="casamento"||a5==="familia") return profiles.casamento;
+  if(a5==="emocional"||(answers[0]||"")==="peso"||(answers[0]||"")==="ansiosa") return profiles.emocional;
+  if(a1==="chamado"||a5==="proposito") return profiles.proposito;
+  return profiles.geral;
+}
+function pct(){return Math.round((cur/questions.length)*100)}
+
+function toggleFaq(idx){
+  const q=document.querySelectorAll('.faq-q')[idx];
+  const a=document.querySelectorAll('.faq-a')[idx];
+  if(q&&a){q.classList.toggle('open');a.classList.toggle('open')}
+}
+
+function render(){
+  const el=document.getElementById("screen");
+
+  if(step==="intro"){
+    el.innerHTML=`
+      <div style="text-align:center">
+        <div class="live-badge"><div class="live-dot"></div>AO VIVO — Diagnóstico em andamento</div>
+        <div class="viewers">👁 <span id="viewer-count">${viewers.toLocaleString('pt-BR')}</span> mulheres estão descobrindo seu perfil agora</div>
+        <div class="intro-badge"><i class="fa-solid fa-crown"></i> Diagnóstico Espiritual Gratuito</div>
+        <p class="h1" style="margin-bottom:.75rem">Descubra o que está bloqueando as suas respostas — e como o Jejum de Ester muda isso em 3 dias</p>
+        <p class="body" style="margin-bottom:1.25rem">7 perguntas revelam seu perfil espiritual e mostram o caminho exato que Deus preparou para você agora.</p>
+        <div class="intro-test">
+          <div class="it-stars">★★★★★</div>
+          <p class="it-text">"Eu entrei sem acreditar muito e no terceiro dia Deus me visitou de uma forma sobrenatural. Não tenho palavras."</p>
+          <p class="it-author">— Cláudia S., Belo Horizonte, MG • compra verificada ✓</p>
+        </div>
+        <div class="social-proof">
+          <div class="sp-item"><i class="fa-solid fa-users"></i><span>+5.247 mulheres</span></div>
+          <div class="sp-item"><i class="fa-solid fa-clock"></i><span>2 minutos</span></div>
+          <div class="sp-item"><i class="fa-solid fa-shield-halved"></i><span>100% gratuito</span></div>
+        </div>
+        <button class="btn-full" onclick="go('q')" style="margin-bottom:.75rem">Descobrir meu perfil espiritual →</button>
+        <p class="start-sub">Sem cadastro. Sem cartão. Só a sua jornada.</p>
+      </div>`;
+    return;
+  }
+
+  if(step==="q"){
+    const q=questions[cur];
+    el.innerHTML=`
+      <div class="prog-wrap">
+        <div class="prog-top"><span class="prog-label">${q.phase}</span><span class="prog-pct">${pct()}%</span></div>
+        <div class="prog-bg"><div class="prog-fill" style="width:${pct()}%"></div></div>
+      </div>
+      <p class="eyebrow">Pergunta ${cur+1} de ${questions.length}</p>
+      <p class="h2" style="margin-bottom:${q.sub?'.4rem':'1.25rem'}">${q.q}</p>
+      ${q.sub?`<p class="body" style="margin-bottom:1.25rem">${q.sub}</p>`:""}
+      <div class="opts">${q.opts.map((o,i)=>`<button class="opt${answers[cur]===q.vals[i]?" sel":""}" onclick="pick(${i})"><span class="opt-num">${String.fromCharCode(65+i)}</span><span>${o}</span></button>`).join("")}</div>
+      <div class="nav">
+        ${cur>0?`<button class="btn-back" onclick="goBack()">← Voltar</button>`:`<span></span>`}
+        <button class="btn-next" id="bn" ${answers[cur]!==undefined?"":"disabled"} onclick="nextQ()">${cur===questions.length-1?"Ver meu resultado →":"Próxima →"}</button>
+      </div>`;
+    return;
+  }
+
+  if(step==="t1"||step==="t2"){
+    const t=transitions[step];
+    el.innerHTML=`<div class="trans-wrap">
+      <div class="trans-icon"><i class="fa-solid ${t.icon}"></i></div>
+      <p class="h2" style="margin-bottom:.75rem">${t.title}</p>
+      ${t.lines.map(l=>`<p class="body" style="margin-bottom:.75rem">${l}</p>`).join("")}
+      <div class="trans-verse"><p class="verse-text">${t.verse}</p><p class="verse-ref">— ${t.ref}</p></div>
+      <button class="btn-full" onclick="afterTrans()">Continuar minha jornada →</button>
+    </div>`;return;
+  }
+
+  if(step==="loading"){
+    el.innerHTML=`<div class="loading-wrap">
+      <div class="loading-icon"><i class="fa-solid fa-crown"></i></div>
+      <p class="eyebrow" style="text-align:center">Analisando suas respostas</p>
+      <p class="h2" style="text-align:center;margin-bottom:.5rem">Preparando seu diagnóstico espiritual personalizado...</p>
+      <div class="loading-bar-bg"><div class="loading-bar-fill" id="lbar"></div></div>
+      <div class="loading-items">
+        <div class="li-item" id="li0"><i class="fa-solid fa-magnifying-glass"></i><span>Identificando seu bloqueio espiritual...</span></div>
+        <div class="li-item" id="li1"><i class="fa-solid fa-heart"></i><span>Mapeando sua área de maior necessidade...</span></div>
+        <div class="li-item" id="li2"><i class="fa-solid fa-sparkles"></i><span>Selecionando sua jornada personalizada...</span></div>
+        <div class="li-item" id="li3"><i class="fa-solid fa-crown"></i><span>Revelando seu perfil no Reino...</span></div>
+      </div>
+    </div>`;
+    let p=0,idx=0;
+    loadTimer=setInterval(()=>{
+      p+=2;const b=document.getElementById("lbar");
+      if(b)b.style.width=p+"%";
+      if(p===20&&idx<4){document.getElementById("li"+idx++).classList.add("active")}
+      if(p===50&&idx<4){document.getElementById("li"+idx++).classList.add("active")}
+      if(p===75&&idx<4){document.getElementById("li"+idx++).classList.add("active")}
+      if(p===90&&idx<4){document.getElementById("li"+idx++).classList.add("active")}
+      if(p>=100){clearInterval(loadTimer);setTimeout(()=>{step="result";render();scroll()},400)}
+    },60);return;
+  }
+
+  if(step==="result"){
+    const p=getProfile();
+    el.innerHTML=`
+      <div class="result-hero">
+        <div class="profile-badge">👑 ${p.badge}</div>
+        <p class="h2" style="margin-bottom:.4rem">${p.title}</p>
+      </div>
+
+      <div class="dor-block">
+        <p class="dor-title"><i class="fa-solid fa-triangle-exclamation"></i>O que está te prendendo agora</p>
+        ${p.dores.map(d=>`<div class="list-item"><i class="fa-solid fa-circle" style="color:#EF4444;font-size:8px;margin-top:5px"></i><span>${d}</span></div>`).join("")}
+      </div>
+
+      <div class="sol-block">
+        <p class="sol-title"><i class="fa-solid fa-sparkles"></i>O que o Jejum de Ester entrega para você</p>
+        ${p.solucoes.map(s=>`<div class="list-item"><i class="fa-solid fa-circle-check" style="color:#4ADE80"></i><span>${s}</span></div>`).join("")}
+      </div>
+
+      <div class="test-block">
+        <div class="test-header"><div class="test-avatar">${p.test.i}</div><div><div class="test-name">${p.test.n}</div><div class="test-city">${p.test.c}</div></div></div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">"${p.test.t}"</p>
+      </div>
+
+      <div class="test-block">
+        <div class="test-header"><div class="test-avatar">${p.test2.i}</div><div><div class="test-name">${p.test2.n}</div><div class="test-city">${p.test2.c}</div></div></div>
+        <div class="stars">★★★★★</div>
+        <p class="test-text">"${p.test2.t}"</p>
+      </div>
+
+      <div class="includes-block">
+        <p class="includes-title">✨ Tudo que você recebe hoje</p>
+        <div class="include-item">
+          <div class="include-icon">📖</div>
+          <div><div class="include-name">Livro Digital — Jejum de Ester</div><div class="include-desc">O guia completo e estratégico com embasamento bíblico, orações direcionadas e estrutura para cada dia do jejum</div></div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon">🎥</div>
+          <div><div class="include-name">Aulas Gravadas + Lives com a Tallyta</div><div class="include-desc">Conteúdo profundo, ensinamentos proféticos e acompanhamento direto da mentora em cada etapa da sua jornada</div></div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon">👑</div>
+          <div><div class="include-name">Comunidade Exclusiva de Mulheres</div><div class="include-desc">Grupo privado e restrito com mulheres que estão na mesma batalha — suporte, oração e irmandade real 24h</div></div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon">♾️</div>
+          <div><div class="include-name">Acesso Vitalício</div><div class="include-desc">Pague uma única vez e acesse para sempre — faça o jejum quantas vezes quiser, em qualquer fase da vida</div></div>
+        </div>
+        <div class="include-item">
+          <div class="include-icon">📋</div>
+          <div>
+            <div class="include-name">Planner de Jejum 2026 + Cronograma</div>
+            <div class="include-desc">Devocional diário, planejador de objetivos, autoavaliação espiritual e cronograma completo para estruturar seu jejum</div>
+            <div class="include-bonus">🎁 BÔNUS EXCLUSIVO — só quem comprar hoje</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timer-bar">
+        <div class="timer-label">⏳ Oferta especial expira em</div>
+        <div class="timer-digits" id="timer-display"></div>
+        <div class="timer-text">Após esse prazo o preço volta para R$ 137,00</div>
+      </div>
+
+      <div class="scarcity-bar">
+        <div class="scarcity-icon">🔥</div>
+        <div class="scarcity-text"><span class="scarcity-count">247</span> mulheres compraram nas últimas 24h — vagas com desconto se esgotando</div>
+      </div>
+
+      <div class="offer-box">
+        <div class="offer-tag">🔥 55% OFF — SÓ HOJE</div>
+        <p class="offer-h">${p.cta}</p>
+        <p class="price-old">De R$ 137,00</p>
+        <p class="price-new">R$ 67,00</p>
+        <p class="price-inst">ou 12x de R$ 6,92 no cartão</p>
+        <button class="btn-full" onclick="window.open('${CHECKOUT}','_blank')" style="margin-bottom:.75rem">✅ Quero meu acesso agora →</button>
+        <div class="guarantee-text"><i class="fa-solid fa-shield-halved"></i> Garantia incondicional de 7 dias — 100% do seu dinheiro de volta</div>
+        <div class="security-row">
+          <div class="sec-item"><i class="fa-solid fa-lock"></i><span>Pagamento seguro</span></div>
+          <div class="sec-item"><i class="fa-solid fa-credit-card"></i><span>12x sem juros</span></div>
+          <div class="sec-item"><i class="fa-solid fa-infinity"></i><span>Acesso vitalício</span></div>
+        </div>
+      </div>
+
+      <div class="sep"></div>
+      <p class="more-title">O que mais mulheres estão dizendo</p>
+      ${moreTests.map(t=>`<div class="mini-test"><div style="display:flex;align-items:center;gap:8px;margin-bottom:.5rem"><div class="test-avatar" style="width:30px;height:30px;font-size:11px">${t.i}</div><div><div style="font-size:12px;font-weight:600;color:#F0E6FF">${t.n}</div><div style="font-size:10px;color:#A87BC8">${t.c}</div></div><div style="margin-left:auto;color:#F59E0B;font-size:11px">★★★★★</div></div><p class="mini-test-text">"${t.t}"</p></div>`).join("")}
+
+      <div class="sep"></div>
+      <div class="faq-block">
+        <p class="faq-title">Perguntas frequentes</p>
+        ${faqs.map((f,i)=>`<div class="faq-item"><div class="faq-q" onclick="toggleFaq(${i})">${f.q}<i class="fa-solid fa-chevron-down"></i></div><div class="faq-a">${f.a}</div></div>`).join("")}
+      </div>
+
+      <div class="final-cta">
+        <div class="final-cta-quote">"Ester não esperou o momento perfeito. Ela disse: se eu perecer, pereci. E Deus honrou a coragem dela."</div>
+        <p style="font-size:15px;font-weight:600;color:#F0E6FF;margin-bottom:.5rem;text-align:center">Cada dia sem posicionamento é mais um dia carregando o peso sozinha.</p>
+        <button class="btn-full" onclick="window.open('${CHECKOUT}','_blank')" style="margin-bottom:.75rem">✅ Quero meu acesso agora — R$ 67,00 →</button>
+        <div class="guarantee-text"><i class="fa-solid fa-shield-halved"></i> 7 dias de garantia — sem perguntas, sem burocracia</div>
+      </div>`;
+
+    setTimeout(()=>startTimer(timerEnd), 100);
+    return;
+  }
+}
+
+function pick(i){
+  const q=questions[cur];answers[cur]=q.vals[i];
+  document.querySelectorAll(".opt").forEach(b=>b.classList.remove("sel"));
+  document.querySelectorAll(".opt")[i].classList.add("sel");
+  const bn=document.getElementById("bn");if(bn)bn.disabled=false;
+}
+function nextQ(){
+  if(answers[cur]===undefined)return;cur++;
+  if(cur===3){step="t1";render();scroll();return}
+  if(cur===5){step="t2";render();scroll();return}
+  if(cur>=questions.length){step="loading";render();scroll();return}
+  step="q";render();scroll();
+}
+function goBack(){if(cur>0){cur--;step="q";render();scroll()}}
+function afterTrans(){step="q";render();scroll()}
+function go(s){step=s;render();scroll()}
+function scroll(){window.scrollTo({top:0,behavior:"smooth"})}
+
+render();
+</script>
+</body>
+</html>
